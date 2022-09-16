@@ -10,59 +10,51 @@ namespace Blackjack_Game
 	{
 		Player player = new();
 		Dealer dealer = new();
+		Print printer = new Print();
 
+		int playerTotalScore;
 		String choosenOption; 
 		Boolean runGame = true;
 
 		public Game()
 		{
-			Console.WriteLine("You: " + player.playerScore[0] + " & " + player.playerScore[1]);
-			Console.WriteLine("Your current score is " + player.TotalScore());
-			Console.WriteLine("Dealer: " + player.playerScore[0] + " &  XXX");
-			choosenOption = HitOrStay();
+			playerTotalScore = player.TotalScore();
+			printer.PrintIntro(player.playerCards[0], player.playerCards[1], playerTotalScore, dealer.dealerCards[0]);
+			choosenOption = printer.PrintHitOrStay();
 			run();
 
 		}
 
-		public String HitOrStay()
-		{
-			Console.WriteLine(" ");
-			Console.WriteLine("Choose option:");
-			Console.WriteLine("h) Hit");
-			Console.WriteLine("s) Stay");
-			String choosenOption = Console.ReadLine();
-			return choosenOption;
-		}
+
 
 		public void run()
 		{
 			while (runGame) {
 				int dealerTotal = dealer.TotalScore();
-				int playerTotal;
-
+				
 				switch (choosenOption) {
 					case "h":
 						//New card logic
 						int newCard = player.RandomeCard();
 						Console.WriteLine("Your new card is " + newCard);
-						playerTotal = player.TotalScore();
+						playerTotalScore = player.TotalScore();
 
-						if (playerTotal > 21) {
-							CalculateWinner(playerTotal, dealerTotal);
+						if (playerTotalScore > 21) {
+							CalculateWinner(playerTotalScore, dealerTotal);
 							break;
 						}
 
-						Console.WriteLine("Your current score is " + playerTotal);
-						choosenOption = HitOrStay();
+						Console.WriteLine("Your current score is " + playerTotalScore);
+						choosenOption = printer.PrintHitOrStay();
 						break;
 					case "s":
 						//EndGame logic
-						playerTotal = player.TotalScore();
-						CalculateWinner(playerTotal, dealerTotal);
-
+						playerTotalScore = player.TotalScore();
+						CalculateWinner(playerTotalScore, dealerTotal);
 						break;
 					default:
 						Console.WriteLine("Game over");
+						runGame = false;
 						break;
 				}
 

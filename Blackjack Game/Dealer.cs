@@ -9,7 +9,7 @@ namespace Blackjack_Game
 {
 	internal class Dealer : IBlackJack
 	{
-		public List<int> dealerScore = new List<int>();
+		public List<int> dealerCards = new List<int>();
 
 		public Dealer()
 		{
@@ -28,18 +28,18 @@ namespace Blackjack_Game
 			Random random = new Random();
 			int randomNr = random.Next(2, 12);
 
-			dealerScore.Add(randomNr);
+			dealerCards.Add(randomNr);
 			return randomNr;
 		}
 		public int TotalScore()
 		{
-			int totalScore = dealerScore.Aggregate((a, b) => a + b);
+			int totalScore = dealerCards.Aggregate((a, b) => a + b);
 
 			if (totalScore > 21) {
 
 				int newScore = 0;
 
-				foreach (var number in dealerScore) {
+				foreach (var number in dealerCards) {
 					if (number == 11) {
 						newScore = newScore + 1;
 					}
