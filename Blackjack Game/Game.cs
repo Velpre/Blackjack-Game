@@ -37,27 +37,29 @@ namespace Blackjack_Game
 		public void run()
 		{
 			while (runGame) {
+				int dealerTotal = dealer.TotalScore();
+				int playerTotal;
+
 				switch (choosenOption) {
 					case "h":
-						//Player logic
-						Console.WriteLine("Your new card is " + player.RandomeCard());
-						Console.WriteLine("Your current score is " + player.TotalScore());
+						//New card logic
+						int newCard = player.RandomeCard();
+						Console.WriteLine("Your new card is " + newCard);
+						playerTotal = player.TotalScore();
 
+						if (playerTotal > 21) {
+							CalculateWinner(playerTotal, dealerTotal);
+							break;
+						}
+
+						Console.WriteLine("Your current score is " + playerTotal);
 						choosenOption = HitOrStay();
 						break;
 					case "s":
 						//EndGame logic
-						int playerTotal = player.TotalScore();
-						int dealerTotal = dealer.TotalScore();
-
-
+						playerTotal = player.TotalScore();
 						CalculateWinner(playerTotal, dealerTotal);
 
-						Console.WriteLine("Total:");
-						Console.WriteLine("You:" + playerTotal);
-						Console.WriteLine("Dealer:" + dealerTotal);
-
-						runGame = false;
 						break;
 					default:
 						Console.WriteLine("Game over");
@@ -71,23 +73,40 @@ namespace Blackjack_Game
 		void CalculateWinner(int playerScore, int dealaerScore)
 		{
 
+			Console.WriteLine("");
+			Console.WriteLine("Total:");
+			Console.WriteLine("You:" + playerScore);
+			Console.WriteLine("Dealer:" + dealaerScore);
+			Console.WriteLine("");
+
 			if (playerScore > 21 && dealaerScore > 21) {
 				Console.WriteLine("Draw");
+				runGame = false;
 			}
 			else if (playerScore == dealaerScore) {
 				Console.WriteLine("Draw");
+
+				runGame = false;
 			}
 			else if (playerScore > 21) {
 				Console.WriteLine("Dealer wins");
+
+				runGame = false;
 			}
 			else if (dealaerScore > 21) {
 				Console.WriteLine("You wins");
+
+				runGame = false;
 			}
 			else if (playerScore > dealaerScore) {
 				Console.WriteLine("You win");
+
+				runGame = false;
 			}
 			else if (playerScore < dealaerScore) {
 				Console.WriteLine("Dealer wins");
+
+				runGame = false;
 			}
 		}
 		
