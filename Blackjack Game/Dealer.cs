@@ -17,8 +17,8 @@ namespace Blackjack_Game
 			int totalScore = TotalScore();
 
 			while (totalScore < 17) {
-				totalScore = TotalScore();
 				RandomeCard();
+				totalScore = TotalScore();
 			}
 		}
 
@@ -26,15 +26,33 @@ namespace Blackjack_Game
 		public int RandomeCard()
 		{
 			Random random = new Random();
-			int randomNr = random.Next(1, 14);
+			int randomNr = random.Next(2, 12);
+
 			dealerScore.Add(randomNr);
 			return randomNr;
 		}
 		public int TotalScore()
 		{
 			int totalScore = dealerScore.Aggregate((a, b) => a + b);
-			return totalScore;
+
+			if (totalScore > 21) {
+
+				int newScore = 0;
+
+				foreach (var number in dealerScore) {
+					if (number == 11) {
+						newScore = newScore + 1;
+					}
+					else {
+						newScore = newScore + number;
+					}
+				}
+				return newScore;
+			}
+			else {
+				return totalScore;
+			}
 		}
-	
+
 	}
 }
