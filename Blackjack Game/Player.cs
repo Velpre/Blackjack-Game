@@ -12,11 +12,6 @@ namespace Blackjack_Game
 		public List<int> playerCards = new List<int>();
 
 
-		public Player()
-		{
-			RandomeCard();
-			RandomeCard();
-		}	
 
 		public int RandomeCard()
 		{

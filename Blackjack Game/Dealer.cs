@@ -11,17 +11,6 @@ namespace Blackjack_Game
 	{
 		public List<int> dealerCards = new List<int>();
 
-		public Dealer()
-		{
-			RandomeCard();
-			int totalScore = TotalScore();
-
-			while (totalScore < 17) {
-				RandomeCard();
-				totalScore = TotalScore();
-			}
-		}
-
 
 		public int RandomeCard()
 		{
@@ -31,6 +20,18 @@ namespace Blackjack_Game
 			dealerCards.Add(randomNr);
 			return randomNr;
 		}
+
+		//Giving all cards to dealer - total score must be over 17
+		public void GiveDealerCards()
+		{
+			int totalScore = TotalScore();
+
+			while (totalScore < 17) {
+				RandomeCard();
+				totalScore = TotalScore();
+			}
+		}
+
 		public int TotalScore()
 		{
 			int totalScore = dealerCards.Aggregate((a, b) => a + b);
@@ -53,6 +54,7 @@ namespace Blackjack_Game
 				return totalScore;
 			}
 		}
+
 
 	}
 }
